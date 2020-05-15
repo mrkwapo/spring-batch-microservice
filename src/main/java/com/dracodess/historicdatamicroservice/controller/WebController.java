@@ -9,6 +9,7 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class WebController {
@@ -17,8 +18,14 @@ public class WebController {
 
     @Autowired
     Job job;
-
+    
+    @Autowired
+    private RestTemplate restTemplate;
+    
+    //private static String SERVICE_URL = "http://api-gateway/api/admin/runjob";
+    
     @RequestMapping("/admin/runjob")
+    //@RequestMapping("http://api-gateway/api/admin/runjob")
     public String handle() throws Exception {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         try {
@@ -30,4 +37,6 @@ public class WebController {
         }
         return "Done! Check Console Window for more details";
     }
+    
+    
 }
