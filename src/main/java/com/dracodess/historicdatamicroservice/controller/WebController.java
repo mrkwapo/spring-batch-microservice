@@ -20,12 +20,9 @@ public class WebController {
     Job job;
     
     @Autowired
-    private RestTemplate restTemplate;
-    
-    //private static String SERVICE_URL = "http://api-gateway/api/admin/runjob";
+    private RestTemplate restTemplate;    
     
     @RequestMapping("/admin/runjob")
-    //@RequestMapping("http://api-gateway/api/admin/runjob")
     public String handle() throws Exception {
         Logger logger = LoggerFactory.getLogger(this.getClass());
         try {
