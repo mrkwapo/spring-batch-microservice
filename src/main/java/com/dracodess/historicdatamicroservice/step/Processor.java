@@ -19,9 +19,10 @@ public class Processor implements ItemProcessor<Stock, Stock> {
         final Double open_price = stock.getOpen_price();
         final Double close_price =stock.getClose_price();
         final String date_of_record = stock.getDate_of_record();
+        final Double change_in_price = stock.getChange_in_price();
 
 
-        final Stock fixedStock = new Stock(r.nextLong(),symbol, open_price, close_price, date_of_record);
+        final Stock fixedStock = new Stock(r.nextLong(),symbol, open_price, close_price, date_of_record, change_in_price);
 
         log.info("working on (" + stock + ")");
 

@@ -10,6 +10,7 @@ public class Stock{
     Double open_price;
     Double close_price;
     String date_of_record;
+    Double change_in_price;
 
     //Default Constructor
     public Stock() {
@@ -17,12 +18,13 @@ public class Stock{
 
     //Constructor Overload
 
-    public Stock(long id, String symbol, Double open_price, Double close_price, String date_of_record) {
+    public Stock(long id, String symbol, Double open_price, Double close_price, String date_of_record, Double change_in_price) {
         this.id = id;
         this.symbol = symbol;
         this.open_price = open_price;
         this.close_price = close_price;
         this.date_of_record = date_of_record;
+        this.change_in_price = change_in_price;
     }
 
     //Getters and Setters
@@ -65,9 +67,17 @@ public class Stock{
     public void setDate_of_record(String date_of_record) {
         this.date_of_record = date_of_record;
     }
+    
+    public Double getChange_in_price() {
+        return change_in_price;
+    }
 
+    public void setChange_in_price(Double change_in_price) {
+        this.change_in_price = change_in_price;
+    }
+    
     @Override
     public String toString() {
-        return String.format("Stock[id=%d, symbol=%s, open_price=%f, close_price=%f, date_of_record=%s ]", id, symbol, open_price, close_price, date_of_record);
+        return String.format("Stock[id=%d, symbol=%s, open_price=%f, close_price=%f, date_of_record=%s, change_in_price=%f ]", id, symbol, open_price, close_price, date_of_record, change_in_price);
     }
 }

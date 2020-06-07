@@ -15,6 +15,8 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
 
 @Configuration
 @EnableBatchProcessing
@@ -34,11 +36,19 @@ public class BatchConfig {
         return jobBuilderFactory.get("job").incrementer(new RunIdIncrementer()).listener(new Listener(stockDao))
                 .flow(step1()).end().build();
     }
-
+    
+    @Bean
+    public TaskExecutor taskExecutor(){
+        SimpleAsyncTaskExecutor asyncTaskExecutor= new SimpleAsyncTaskExecutor("spring_batch");
+        asyncTaskExecutor.setConcurrencyLimit(5);
+        return asyncTaskExecutor;
+    }
+    
     @Bean
     public Step step1() {
-        return stepBuilderFactory.get("step1").<Stock, Stock>chunk(2)
-                .reader(Reader.reader("sampleDataset.csv"))
-                .processor(new Processor()).writer(new Writer(stockDao)).build();
+        return stepBuilderFactory.get("step1").<Stock, Stock>chunk(200000)
+                .reader(Reader.reader("preprocessedDataset.csv"))
+                .processor(new Processor()).writer(new Writer(stockDao))
+                .taskExecutor(taskExecutor()).build();
     }
 }
